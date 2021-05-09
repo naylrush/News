@@ -18,11 +18,17 @@ struct NewsApp: App {
     }
     
     init() {
-        let loader = NewsLoaderImp()
-        let requestBuilder = SpaceNewsRequestBuilder()
-        self.viewModel = NewsViewModelImpl(loader: loader, requestBuilder: requestBuilder)
+        let requestBuilder = SpaceArticlesRequestBuilder()
         
-        print(newsExample)
+        let urlSession = URLSession.shared
+        let urlDataLoader = URLDataLoader(urlSession: urlSession)
+        
+        let articleJsonLoader = ArticleJsonLoaderImpl(urlDataLoader: urlDataLoader)
+        let imageLoader = ImageLoaderImpl(urlDataLoader: urlDataLoader)
+        
+        self.viewModel = NewsViewModelImpl(requestBuilder: requestBuilder,
+                                           articleJsonLoader: articleJsonLoader,
+                                           imageLoader: imageLoader)
         
         viewModel.newsWereUpdated = { print($0.news) }
         viewModel.updateNews()

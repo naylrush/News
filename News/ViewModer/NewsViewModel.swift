@@ -8,18 +8,24 @@
 import Foundation
 
 protocol NewsViewModel {
-    var news: [News] { get }
+    var news: [Article] { get }
     var newsWereUpdated: ((NewsViewModel) -> Void)? { get set }
-    init(loader: NewsLoader, requestBuilder: NewsRequestBuilder)
+    var imageWasLoaded: ((NewsViewModel, Int) -> Void)? { get set }
+    
+    init(requestBuilder: ArticlesRequestBuilder,
+         articleJsonLoader: ArticleJsonLoader,
+         imageLoader: ImageLoader)
     func updateNews()
 }
 
 class NewsViewModelImpl: NewsViewModel {
-    let loader: NewsLoader
-    let requestBuilder: NewsRequestBuilder
+    let requestBuilder: ArticlesRequestBuilder
+    let articleJsonLoader: ArticleJsonLoader
+    let imageLoader: ImageLoader
     var newsWereUpdated: ((NewsViewModel) -> Void)?
+    var imageWasLoaded: ((NewsViewModel, Int) -> Void)?
     
-    var news: [News] = [] {
+    var news: [Article] = [] {
         didSet {
             self.newsWereUpdated?(self)
         }
@@ -27,16 +33,26 @@ class NewsViewModelImpl: NewsViewModel {
     
     func updateNews() {
         if let request = self.requestBuilder.buildRequest(limit: 5, startIndex: nil) {
-            self.loader.loadNews(from: request) { (news: [News]?) in
-                if let news = news {
-                    self.news = news
+            self.articleJsonLoader.loadArticles(from: request) { (articlesJson: [ArticleJson]) in
+                var articles = [Article]()
+                for (id, articleJson) in articlesJson.enumerated() {
+                    var article = Article(id: id, json: articleJson)
+                    self.imageLoader.loadImage(from: articleJson.imageUrl) { image in
+                        article.image = image
+                        self.imageWasLoaded?(self, id)
+                    }
+                    articles.append(article)
                 }
+                self.news = articles
             }
         }
     }
     
-    required init(loader: NewsLoader, requestBuilder: NewsRequestBuilder) {
-        self.loader = loader
+    required init(requestBuilder: ArticlesRequestBuilder,
+                  articleJsonLoader: ArticleJsonLoader,
+                  imageLoader: ImageLoader) {
         self.requestBuilder = requestBuilder
+        self.articleJsonLoader = articleJsonLoader
+        self.imageLoader = imageLoader
     }
 }

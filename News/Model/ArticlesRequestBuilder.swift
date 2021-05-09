@@ -1,5 +1,5 @@
 //
-//  NewsRequestBuilder.swift
+//  ArticlesRequestBuilder.swift
 //  News
 //
 //  Created by Alexey Davletshin on 08.05.2021.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol NewsRequestBuilder {
+protocol ArticlesRequestBuilder {
     func buildRequest(limit: Int?, startIndex: Int?) -> URL?
 }
 
-class SpaceNewsRequestBuilder: NewsRequestBuilder {
+class SpaceArticlesRequestBuilder: ArticlesRequestBuilder {
     let urlPath: URLComponents
     
     func buildRequest(limit: Int?, startIndex: Int?) -> URL? {
