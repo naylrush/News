@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Article: Identifiable {
     let id: Int
-    let realId: String
+    let articleId: String
     let title: String
     let url: URL
     var image: UIImage? = nil
@@ -19,7 +19,7 @@ struct Article: Identifiable {
     
     init(id: Int, json: ArticleJson) {
         self.id = id
-        self.realId = json.id
+        self.articleId = json.id
         self.title = json.title
         self.url = json.url
         self.summary = json.summary
@@ -27,11 +27,3 @@ struct Article: Identifiable {
         self.updatedAt = json.updatedAt
     }
 }
-
-var articleExample: Article = {
-    var article = Article(id: 0, json: articleJsonExample)
-    article.image = UIImage(systemName: "Arrow")
-    
-    return article
-}()
-
