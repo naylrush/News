@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NewsViewModel {
-    var news: [News]? { get }
+    var news: [News] { get }
     var newsWereUpdated: ((NewsViewModel) -> Void)? { get set }
     init(loader: NewsLoader, requestBuilder: NewsRequestBuilder)
     func updateNews()
@@ -19,7 +19,7 @@ class NewsViewModelImpl: NewsViewModel {
     let requestBuilder: NewsRequestBuilder
     var newsWereUpdated: ((NewsViewModel) -> Void)?
     
-    var news: [News]? {
+    var news: [News] = [] {
         didSet {
             self.newsWereUpdated?(self)
         }
