@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct NewsApp: App {
-    var viewModel: NewsViewModel
+    @ObservedObject var viewModel: NewsViewModelImpl
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: viewModel)
         }
     }
     
@@ -23,14 +23,13 @@ struct NewsApp: App {
         let urlSession = URLSession.shared
         let urlDataLoader = URLDataLoader(urlSession: urlSession)
         
-        let articleJsonLoader = ArticleJsonLoaderImpl(urlDataLoader: urlDataLoader)
+        let articleLoader = ArticleLoaderImpl(urlDataLoader: urlDataLoader)
         let imageLoader = ImageLoaderImpl(urlDataLoader: urlDataLoader)
         
         self.viewModel = NewsViewModelImpl(requestBuilder: requestBuilder,
-                                           articleJsonLoader: articleJsonLoader,
+                                           articleLoader: articleLoader,
                                            imageLoader: imageLoader)
         
-        viewModel.newsWereUpdated = { print($0.news) }
-        viewModel.updateNews()
+        viewModel.updateArticles()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ArticleJsonLoader.swift
+//  ArticleLoader.swift
 //  News
 //
 //  Created by Alexey Davletshin on 07.05.2021.
@@ -7,21 +7,21 @@
 
 import Foundation
 
-protocol ArticleJsonLoader {
-    func loadArticles(from url: URL, completion: @escaping (([ArticleJson]) -> Void))
+protocol ArticleLoader {
+    func loadArticles(from url: URL, completion: @escaping (([Article]) -> Void))
     init(urlDataLoader: URLDataLoader)
 }
 
-class ArticleJsonLoaderImpl: ArticleJsonLoader {
+class ArticleLoaderImpl: ArticleLoader {
     let urlDataLoader: URLDataLoader
     
-    func loadArticles(from url: URL, completion: @escaping (([ArticleJson]) -> Void)) {
+    func loadArticles(from url: URL, completion: @escaping (([Article]) -> Void)) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
         
         urlDataLoader.loadData(from: url) { [decoder] data in
             do {
-                let articlesJson = try decoder.decode([ArticleJson].self, from: data)
+                let articlesJson = try decoder.decode([Article].self, from: data)
                 
                 completion(articlesJson)
             } catch {

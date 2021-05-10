@@ -2,28 +2,17 @@
 //  Article.swift
 //  News
 //
-//  Created by Alexey Davletshin on 09.05.2021.
+//  Created by Alexey Davletshin on 07.05.2021.
 //
 
-import SwiftUI
+import Foundation
 
-struct Article: Identifiable {
-    let id: Int
-    let articleId: String
+struct Article: Codable {
+    let id: String
     let title: String
     let url: URL
-    var image: UIImage? = nil
+    let imageUrl: URL
     let summary: String
     let publishedAt: Date
     let updatedAt: Date
-    
-    init(id: Int, json: ArticleJson) {
-        self.id = id
-        self.articleId = json.id
-        self.title = json.title
-        self.url = json.url
-        self.summary = json.summary
-        self.publishedAt = json.publishedAt
-        self.updatedAt = json.updatedAt
-    }
 }

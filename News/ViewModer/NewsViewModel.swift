@@ -5,54 +5,47 @@
 //  Created by Alexey Davletshin on 08.05.2021.
 //
 
-import Foundation
+import SwiftUI
 
-protocol NewsViewModel {
-    var news: [Article] { get }
-    var newsWereUpdated: ((NewsViewModel) -> Void)? { get set }
-    var imageWasLoaded: ((NewsViewModel, Int) -> Void)? { get set }
-    
+protocol NewsViewModel: ObservableObject {
+    var articleCells: [ArticleCell] { get }
+    func updateArticles()
     init(requestBuilder: ArticlesRequestBuilder,
-         articleJsonLoader: ArticleJsonLoader,
+         articleLoader: ArticleLoader,
          imageLoader: ImageLoader)
-    func updateNews()
 }
 
-class NewsViewModelImpl: NewsViewModel {
+class NewsViewModelImpl: NewsViewModel, ObservableObject {
     let requestBuilder: ArticlesRequestBuilder
-    let articleJsonLoader: ArticleJsonLoader
+    let articleLoader: ArticleLoader
     let imageLoader: ImageLoader
-    var newsWereUpdated: ((NewsViewModel) -> Void)?
-    var imageWasLoaded: ((NewsViewModel, Int) -> Void)?
     
-    var news: [Article] = [] {
-        didSet {
-            self.newsWereUpdated?(self)
-        }
-    }
+    @Published var articleCells: [ArticleCell] = []
     
-    func updateNews() {
-        if let request = self.requestBuilder.buildRequest(limit: 5, startIndex: nil) {
-            self.articleJsonLoader.loadArticles(from: request) { (articlesJson: [ArticleJson]) in
-                var articles = [Article]()
-                for (id, articleJson) in articlesJson.enumerated() {
-                    var article = Article(id: id, json: articleJson)
-                    self.imageLoader.loadImage(from: articleJson.imageUrl) { image in
-                        article.image = image
-                        self.imageWasLoaded?(self, id)
+    func updateArticles() {
+        if let request = self.requestBuilder.buildRequest(limit: 20, startIndex: nil) {
+            self.articleLoader.loadArticles(from: request) { (articles: [Article]) in
+                var articleCells = [ArticleCell]()
+                
+                for (id, article) in articles.enumerated() {
+                    var articleCell = ArticleCell(id: id, article: article)
+                    
+                    self.imageLoader.loadImage(from: article.imageUrl) { image in
+                        articleCell.image = image
+                        self.articleCells[id] = articleCell
                     }
-                    articles.append(article)
+                    articleCells.append(articleCell)
                 }
-                self.news = articles
+                self.articleCells = articleCells
             }
         }
     }
     
     required init(requestBuilder: ArticlesRequestBuilder,
-                  articleJsonLoader: ArticleJsonLoader,
+                  articleLoader: ArticleLoader,
                   imageLoader: ImageLoader) {
         self.requestBuilder = requestBuilder
-        self.articleJsonLoader = articleJsonLoader
+        self.articleLoader = articleLoader
         self.imageLoader = imageLoader
     }
 }
