@@ -13,18 +13,22 @@ struct ArticleView: View {
     @State var showImage = false
     
     var body: some View {
-        VStack {
-            if let image = articleCell.image {
-                ArticleImageView(image: image, showImage: $showImage)
-            } else {
-                Text("Loading...")
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding()
+        ZStack(alignment: .center) {
+            Color.textBackground.ignoresSafeArea()
+            VStack {
+                if let image = articleCell.image {
+                    ArticleImageView(image: image, showImage: $showImage)
+                } else {
+                    Text("Loading...")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding()
+                }
+                if !showImage {
+                    ArticleText(articleCell.article)
+                    Spacer()
+                }
             }
-            if !showImage {
-                ArticleText(articleCell.article)
-                Spacer()
-            }
+            .navigationBarBackButtonHidden(showImage)
         }
     }
 }

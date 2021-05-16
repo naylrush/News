@@ -12,19 +12,26 @@ struct ContentView: View {
     
     init(_ viewModel: NewsViewModelImpl) {
         self.viewModel = viewModel
+        UINavigationBar.appearance().backgroundColor = .clear
     }
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                ForEach(viewModel.articleCells) { articleCell in
-                    NavigationLink(destination: ArticleView(articleCell: articleCell)) {
-                        articleCell
+            ZStack {
+                Color(UIColor.secondarySystemFill).ignoresSafeArea()
+                ScrollView {
+                    Divider()
+                    VStack {
+                        ForEach(viewModel.articleCells) { articleCell in
+                            NavigationLink(destination: ArticleView(articleCell: articleCell)) {
+                                articleCell
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
+                .navigationBarTitle("Space News")
             }
-            .navigationBarTitle("Space News")
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

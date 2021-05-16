@@ -12,6 +12,8 @@ struct ArticleCell: View, Identifiable {
     let article: Article
     var image: UIImage?
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         VStack(alignment: .center) {
             if let image = self.image {
@@ -27,6 +29,8 @@ struct ArticleCell: View, Identifiable {
                 .lineLimit(nil)
                 .padding(.horizontal)
         }
+        .padding(.vertical, 10)
+        .background(Color.textBackground)
     }
 }
 
