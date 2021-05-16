@@ -10,10 +10,14 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: NewsViewModelImpl
     
+    init(_ viewModel: NewsViewModelImpl) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(viewModel.articleCells) {articleCell in
+                ForEach(viewModel.articleCells) { articleCell in
                     NavigationLink(destination: ArticleView(articleCell: articleCell)) {
                         articleCell
                     }
@@ -27,12 +31,16 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static func getViewModel() -> NewsViewModelImpl {
+        let viewModel = NewsApp().viewModel
+        viewModel.articleCells = exampleArticleCells
+        viewModel.articleCells.append(
+            ArticleCell(id: exampleArticles.count, article: exampleArticles[0])
+        )
+        return viewModel
+    }
+    
     static var previews: some View {
-        ContentView(viewModel: {
-            let viewModel = NewsApp().viewModel
-            viewModel.articleCells = exampleArticleCells
-            viewModel.articleCells.append(ArticleCell(id: exampleArticles.count, article: exampleArticles[0]))
-            return viewModel
-        }())
+        ContentView(getViewModel())
     }
 }

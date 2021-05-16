@@ -30,9 +30,10 @@ struct ArticleCell: View, Identifiable {
     }
 }
 
-
 struct NewsCell_Previews: PreviewProvider {
     static var previews: some View {
-        ArticleCell(id: 1, article: exampleArticles[1], image: UIImage(named: "ExampleArticle1"))
+        ArticleCell(id: 1,
+                    article: exampleArticles[1],
+                    image: UIImage(named: "ExampleArticle1"))
     }
 }

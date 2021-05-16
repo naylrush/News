@@ -15,7 +15,7 @@ protocol NewsViewModel: ObservableObject {
          imageLoader: ImageLoader)
 }
 
-class NewsViewModelImpl: NewsViewModel, ObservableObject {
+class NewsViewModelImpl: NewsViewModel {
     let requestBuilder: ArticlesRequestBuilder
     let articleLoader: ArticleLoader
     let imageLoader: ImageLoader
