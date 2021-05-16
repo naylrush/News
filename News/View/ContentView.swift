@@ -14,10 +14,13 @@ struct ContentView: View {
         NavigationView {
             ScrollView {
                 ForEach(viewModel.articleCells) {articleCell in
-                    articleCell
+                    NavigationLink(destination: ArticleView(articleCell: articleCell)) {
+                        articleCell
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
-            .navigationBarTitle(Text("Space News"))
+            .navigationBarTitle("Space News")
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

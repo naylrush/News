@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6D4546D12647F20E008DA2F6 /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4546D02647F20E008DA2F6 /* ArticleCell.swift */; };
+		6D5A045B265154390017228E /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5A045A265154390017228E /* ArticleView.swift */; };
 		6D88101C2648139C0026400D /* URLDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88101B2648139C0026400D /* URLDataLoader.swift */; };
 		6D88102726484E0B0026400D /* ExampleArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88102626484E0B0026400D /* ExampleArticles.swift */; };
 		6D88102B26484FC80026400D /* ExampleArticleCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88102A26484FC80026400D /* ExampleArticleCells.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		6D4546D02647F20E008DA2F6 /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
+		6D5A045A265154390017228E /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
 		6D88101B2648139C0026400D /* URLDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDataLoader.swift; sourceTree = "<group>"; };
 		6D88102626484E0B0026400D /* ExampleArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleArticles.swift; sourceTree = "<group>"; };
 		6D88102A26484FC80026400D /* ExampleArticleCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleArticleCells.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				6DF4F2702647EA5D00F0FB1F /* ContentView.swift */,
 				6D4546D02647F20E008DA2F6 /* ArticleCell.swift */,
+				6D5A045A265154390017228E /* ArticleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 				6D4546D12647F20E008DA2F6 /* ArticleCell.swift in Sources */,
 				6DA6224F26480B6B00C6C340 /* ImageLoader.swift in Sources */,
 				6DF4F2832647EA9000F0FB1F /* Article.swift in Sources */,
+				6D5A045B265154390017228E /* ArticleView.swift in Sources */,
 				6DF4F2842647EA9000F0FB1F /* ArticleLoader.swift in Sources */,
 				6D88102726484E0B0026400D /* ExampleArticles.swift in Sources */,
 				6DF4F26F2647EA5D00F0FB1F /* NewsApp.swift in Sources */,
