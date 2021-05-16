@@ -10,32 +10,27 @@ import SwiftUI
 struct ArticleView: View {
     var articleCell: ArticleCell
     
+    @State var showImage = false
+    
     var body: some View {
         VStack {
             if let image = articleCell.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
+                ArticleImageView(image: image, showImage: $showImage)
             } else {
                 Text("Loading...")
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding()
             }
-            Text(articleCell.article.title)
-                .font(.title2)
-                .lineLimit(nil)
-                .padding(.horizontal)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
-            Text(articleCell.article.summary)
-                .lineLimit(nil)
-                .padding(.horizontal)
-            Spacer()
+            if !showImage {
+                ArticleText(articleCell.article)
+                Spacer()
+            }
         }
     }
 }
 
 struct ArticleView_Previews: PreviewProvider {
     static var previews: some View {
-        ArticleView(articleCell: ArticleCell(id: 1, article: exampleArticles[1], image: UIImage(named: "ExampleArticle1")))
+        ArticleView(articleCell: exampleArticleCells[1])
     }
 }
