@@ -19,18 +19,19 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 Color(UIColor.secondarySystemFill).ignoresSafeArea()
-                ScrollView {
+                VStack {
                     Divider()
-                    VStack {
-                        ForEach(viewModel.articleCells) { articleCell in
-                            NavigationLink(destination: ArticleView(articleCell: articleCell)) {
-                                articleCell
+                    ScrollView {
+                        VStack {
+                            ForEach(viewModel.articleCells) { articleCell in
+                                NavigationLink(destination: ArticleView(articleCell: articleCell)) {
+                                    articleCell
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
-                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
-                .navigationBarTitle("Space News")
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

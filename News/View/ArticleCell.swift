@@ -16,6 +16,7 @@ struct ArticleCell: View, Identifiable {
     
     var body: some View {
         VStack(alignment: .center) {
+            Divider()
             if let image = self.image {
                 Image(uiImage: image)
                     .resizable()
@@ -28,8 +29,8 @@ struct ArticleCell: View, Identifiable {
             Text(article.title)
                 .lineLimit(nil)
                 .padding(.horizontal)
+            Divider()
         }
-        .padding(.vertical, 10)
         .background(Color.textBackground)
     }
 }

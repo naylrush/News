@@ -15,19 +15,28 @@ struct ArticleView: View {
     var body: some View {
         ZStack(alignment: .center) {
             Color.textBackground.ignoresSafeArea()
-            VStack {
-                if let image = articleCell.image {
-                    ArticleImageView(image: image, showImage: $showImage)
-                } else {
-                    Text("Loading...")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding()
-                }
-                if !showImage {
-                    ArticleText(articleCell.article)
-                    Spacer()
+            ScrollView {
+                VStack {
+                    if !showImage {
+                        Divider()
+                    }
+                    
+                    if let image = articleCell.image {
+                        ArticleImageView(image: image, showImage: $showImage)
+                    } else {
+                        Text("Loading...")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding()
+                    }
+                    
+                    if !showImage {
+                        ArticleText(articleCell.article)
+                        Spacer()
+                    }
                 }
             }
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(showImage)
             .navigationBarBackButtonHidden(showImage)
         }
     }
