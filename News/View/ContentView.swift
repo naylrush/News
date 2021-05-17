@@ -19,13 +19,16 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Divider()
-                ScrollView {
+                
+                RefreshScrollView(tintColor: Color.secondary) {
                     ForEach(viewModel.articleCells) { articleCell in
                         NavigationLink(destination: ArticleView(articleCell)) {
                             articleCell
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
+                } onUpdate: {
+                    viewModel.updateArticles()
                 }
             }
             .navigationBarTitle("Space News", displayMode: .inline)
