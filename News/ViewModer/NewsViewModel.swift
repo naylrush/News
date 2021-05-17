@@ -21,9 +21,13 @@ class NewsViewModelImpl: NewsViewModel {
     let imageLoader: ImageLoader
     
     @Published var articleCells: [ArticleCell] = []
+    var lastUpdateDate = Date()
     
     func updateArticles() {
         if let request = self.requestBuilder.buildRequest(limit: 20, startIndex: nil) {
+            let updateDate = Date()
+            lastUpdateDate = updateDate
+            
             self.articleLoader.loadArticles(from: request) { (articles: [Article]) in
                 var articleCells = [ArticleCell]()
                 
@@ -31,6 +35,8 @@ class NewsViewModelImpl: NewsViewModel {
                     var articleCell = ArticleCell(id: id, article: article)
                     
                     self.imageLoader.loadImage(from: article.imageUrl) { image in
+                        guard self.lastUpdateDate == updateDate else { return }
+                        
                         articleCell.image = image
                         self.articleCells[id] = articleCell
                     }

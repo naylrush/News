@@ -13,19 +13,11 @@ struct ArticleImageView: View {
     @Binding var showImage: Bool
     
     var body: some View {
-        ZStack {
-            if showImage {
-                Color(UIColor.darkGray)
-                    .ignoresSafeArea()
-            }
-            Button(action: {
-                self.showImage.toggle()
-            }) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .animation(.spring())
-            }
+        Button(action: {
+            self.showImage.toggle()
+        }) {
+            ArticleImage(image, useSizeClasses: !showImage)
+                .animation(.spring())
         }
     }
 }

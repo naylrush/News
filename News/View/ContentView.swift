@@ -17,22 +17,20 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                Color(UIColor.secondarySystemFill).ignoresSafeArea()
-                VStack {
-                    Divider()
-                    ScrollView {
-                        VStack {
-                            ForEach(viewModel.articleCells) { articleCell in
-                                NavigationLink(destination: ArticleView(articleCell: articleCell)) {
-                                    articleCell
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
+            VStack {
+                Divider()
+                ScrollView {
+                    ForEach(viewModel.articleCells) { articleCell in
+                        NavigationLink(destination: ArticleView(articleCell)) {
+                            articleCell
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
             }
+            .navigationBarTitle("Space News", displayMode: .inline)
+            .background(Color(UIColor.secondarySystemFill)
+                            .ignoresSafeArea())
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

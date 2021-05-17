@@ -10,40 +10,49 @@ import SwiftUI
 struct ArticleView: View {
     var articleCell: ArticleCell
     
+    init(_ articleCell: ArticleCell) {
+        self.articleCell = articleCell
+    }
+    
     @State var showImage = false
     
     var body: some View {
-        ZStack(alignment: .center) {
-            Color.textBackground.ignoresSafeArea()
+        GeometryReader { geometry in
             ScrollView {
-                VStack {
-                    if !showImage {
-                        Divider()
-                    }
-                    
-                    if let image = articleCell.image {
+                if let image = articleCell.image {
+                    VStack {
+                        if !showImage {
+                            Divider()
+                            Spacer()
+                        }
                         ArticleImageView(image: image, showImage: $showImage)
-                    } else {
-                        Text("Loading...")
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding()
+                        if !showImage {
+                            Spacer()
+                        }
                     }
-                    
-                    if !showImage {
-                        ArticleText(articleCell.article)
-                        Spacer()
-                    }
+                    .frame(width: showImage ? geometry.size.width : nil,
+                           height: showImage ? geometry.size.height : nil)
+                } else {
+                    Text("Loading...")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding()
+                }
+                
+                if !showImage {
+                    ArticleText(articleCell.article)
+                    Spacer()
                 }
             }
             .navigationBarTitle("", displayMode: .inline)
-            .navigationBarHidden(showImage)
-            .navigationBarBackButtonHidden(showImage)
+            .background((showImage ? Color.black.opacity(0.8) : Color.textBackground)
+                            .ignoresSafeArea())
+            .animation(.easeIn)
         }
     }
 }
 
 struct ArticleView_Previews: PreviewProvider {
     static var previews: some View {
-        ArticleView(articleCell: exampleArticleCells[1])
+        ArticleView(exampleArticleCells[1])
     }
 }

@@ -18,9 +18,7 @@ struct ArticleCell: View, Identifiable {
         VStack(alignment: .center) {
             Divider()
             if let image = self.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
+                ArticleImage(image)
             } else {
                 Text("Loading...")
                     .frame(maxWidth: .infinity, alignment: .center)
