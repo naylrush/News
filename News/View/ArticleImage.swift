@@ -9,20 +9,15 @@ import SwiftUI
 
 struct ArticleImage: View {
     let image: UIImage
-    let useSizeClasses: Bool
     
-    @Environment(\.horizontalSizeClass) var sizeClass
-    
-    init(_ image: UIImage, useSizeClasses: Bool = true) {
+    init(_ image: UIImage) {
         self.image = image
-        self.useSizeClasses = useSizeClasses
     }
     
     var body: some View {
         Image(uiImage: image)
             .resizable()
             .scaledToFit()
-            .padding(.horizontal, useSizeClasses && sizeClass == .regular ? UIScreen.main.bounds.width / 10 : 0)
     }
 }
 

@@ -16,8 +16,9 @@ struct ArticleImageView: View {
         Button(action: {
             self.showImage.toggle()
         }) {
-            ArticleImage(image, useSizeClasses: !showImage)
+            ArticleImage(image)
                 .animation(.spring())
+                .modifier(OrientationPadding(!showImage))
         }
     }
 }

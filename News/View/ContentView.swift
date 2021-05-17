@@ -24,6 +24,7 @@ struct ContentView: View {
                     ForEach(viewModel.articleCells) { articleCell in
                         NavigationLink(destination: ArticleView(articleCell)) {
                             articleCell
+                                .modifier(OrientationPadding())
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
